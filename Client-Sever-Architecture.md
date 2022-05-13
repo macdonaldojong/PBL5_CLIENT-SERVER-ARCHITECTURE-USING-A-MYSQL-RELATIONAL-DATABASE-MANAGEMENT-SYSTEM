@@ -1,13 +1,12 @@
-# IMPLEMENT: A CLIENT SERVER ARCHITECTURE USING MYSQL DATABASE MANAGEMENT SYSTEM (DBMS)
+## IMPLEMENT: A CLIENT SERVER ARCHITECTURE USING MYSQL DATABASE MANAGEMENT SYSTEM (DBMS)
 
 ## Step1 - Setup two instances of mysql in AWS:
 
-## mysql server
+##- mysql server
 ### change name on Ubuntu -> mysql-server
 * sudo nano /etc/hostname
 * sudo reboot
-
-## mysql client
+##- mysql client
 ### change name on Ubuntu -> mysql-client
 * sudo nano /etc/hostname
 * sudo reboot
