@@ -24,33 +24,41 @@ sudo systemctl start mysql
 sudo apt install mysql-client -y
 sudo systemctl start mysql
 
-### Mysql server uses TCP Port 3306 by default.
-### Create a new rule in the client security group, allowing connections on port 3306 to client only through server private ip address.
-### Launch the DB Server
+### Configure login & security standards and Launch the database Server:
 
 ```bash
 sudo mysql_secure_installation 
 sudo mysql
 ```
-### Allow client private ip address in the inbound rules while selecting mysql
-### Run this script on mysql-Server machine
+### While DB Server is launched, create user and grant previleges: 
 ```bash
 CREATE USER 'remote_user'@'%' IDENTIFIED WITH mysql_native_password BY 'Password.11';
 CREATE DATABASE test_db;
 GRANT ALL ON test_db.* TO 'remote_user'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
-### Configure MySQL server to allow connections from remote hosts
+### In server, show database:
+```bash
+Show databases;
+```
+![client DB](https://github.com/macdonaldojong/PBL5_CLIENT-SERVER-ARCHITECTURE-USING-A-MYSQL-RELATIONAL-DATABASE-MANAGEMENT-SYSTEM/blob/037d48d5b4a7af69d601d59262012149bbc6c2d1/image/Server%20DB.PNG)
+## Now in mysql-client machine,
+### Mysql/Aurora uses TCP Port 3306 by default.
+### Create a new rule in the {client's security group}, allowing connections on port:3306 to client permitted only through {server's_private_ip} address.
+
+![change config file for server](https://github.com/macdonaldojong/PBL5_CLIENT-SERVER-ARCHITECTURE-USING-A-MYSQL-RELATIONAL-DATABASE-MANAGEMENT-SYSTEM/blob/037d48d5b4a7af69d601d59262012149bbc6c2d1/image/client%20security%20group%20configuration%20to%20accept%20server%20ip.PNG)
+
+### Configure MySQL server to allow connections from remote hosts by
+### Locate the bind address and Replace ‘127.0.0.1’ to ‘0.0.0.0’
 ```bash
 sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
-### Locate the bind address and Replace ‘127.0.0.1’ to ‘0.0.0.0’
 
 ![change config file for server](https://github.com/macdonaldojong/darey_project5/blob/a12f5415de4a44f0219c56046ddbf1a3bed00369/image/change%20config%20file%20for%20server.PNG)
 
 ### From mysql client Linux Server connect remotely to mysql server Database Engine without using SSH
 ```bash
-sudo mysql -u remote_user -h 172.31.12.125 (private ip of mysql-server) -p
+sudo mysql -u remote_user -h 172.31.12.125 -p # where this 172.31.12.125 is {server's_private_ip}
 Show databases;
 ```
 ![client DB](https://github.com/macdonaldojong/darey_project5/blob/a12f5415de4a44f0219c56046ddbf1a3bed00369/image/client%20DB.PNG)
